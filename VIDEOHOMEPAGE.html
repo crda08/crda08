@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 10 Movie Trailers</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a0a0a 25%, #2d1b1b 50%, #1a0a0a 75%, #0c0c0c 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, rgba(0, 100, 255, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ff0000 0%, #ffd700 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .page-title::after {
+            content: 'MARVEL';
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            font-weight: 700;
+            color: #ff0000;
+            background: #ffffff;
+            padding: 5px 15px;
+            border-radius: 15px;
+            letter-spacing: 2px;
+            border: 2px solid #ff0000;
+        }
+
+        .page-subtitle {
+            color: #ccc;
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            margin-top: 30px;
+        }
+
+        .video-grid {
+            display: grid;
+            gap: 30px;
+            grid-template-columns: 1fr;
+        }
+
+        .video-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            border: 1px solid rgba(51, 144, 255, 0.1);
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: slideInLeft 0.8s ease forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-item:nth-child(1) { animation-delay: 0.1s; }
+        .video-item:nth-child(2) { animation-delay: 0.2s; }
+        .video-item:nth-child(3) { animation-delay: 0.3s; }
+        .video-item:nth-child(4) { animation-delay: 0.4s; }
+        .video-item:nth-child(5) { animation-delay: 0.5s; }
+        .video-item:nth-child(6) { animation-delay: 0.6s; }
+        .video-item:nth-child(7) { animation-delay: 0.7s; }
+        .video-item:nth-child(8) { animation-delay: 0.8s; }
+        .video-item:nth-child(9) { animation-delay: 0.9s; }
+        .video-item:nth-child(10) { animation-delay: 1.0s; }
+
+        .video-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(51, 144, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .video-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(51, 144, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(51, 144, 255, 0.1);
+        }
+
+        .video-item:hover::before {
+            left: 100%;
+        }
+
+        .video-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff0000 0%, #ffd700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            min-width: 60px;
+            text-align: center;
+            position: relative;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.5));
+        }
+
+        .video-number::after {
+            content: '';
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 40px;
+            background: linear-gradient(180deg, #ff0000, #ffd700, transparent);
+            border-radius: 2px;
+        }
+
+        .thumbnail-container {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .thumbnail {
+            width: 280px;
+            height: 160px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-item:hover .thumbnail {
+            transform: scale(1.05);
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.9) 0%, rgba(255, 215, 0, 0.9) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .play-overlay::after {
+            content: '▶';
+            color: white;
+            font-size: 24px;
+            margin-left: 4px;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-item:hover .play-overlay {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .video-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .video-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            line-height: 1.3;
+        }
+
+        .video-title:hover {
+            background: linear-gradient(135deg, #ff0000 0%, #ffd700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+        }
+
+        .video-description {
+            color: #cccccc;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 8px 0;
+        }
+
+        .video-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .video-duration {
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.3) 0%, rgba(255, 215, 0, 0.3) 100%);
+            color: #ffd700;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border: 2px solid rgba(255, 0, 0, 0.4);
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+
+        .video-genre {
+            color: #ff6b6b;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 8px 15px;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.2) 0%, rgba(255, 0, 0, 0.1) 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 30px 15px;
+            }
+            
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .thumbnail {
+                width: 220px;
+                height: 125px;
+            }
+            
+            .video-item {
+                padding: 20px;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .video-item {
+                flex-direction: column;
+                text-align: center;
+                padding: 25px 20px;
+            }
+            
+            .video-number {
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+            
+            .video-number::after {
+                display: none;
+            }
+            
+            .thumbnail {
+                width: 100%;
+                max-width: 300px;
+                height: 170px;
+            }
+            
+            .video-meta {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .video-item {
+                padding: 20px 15px;
+            }
+            
+            .video-title {
+                font-size: 1.2rem;
+            }
+            
+            .video-description {
+                font-size: 0.9rem;
+            }
+            
+            .thumbnail {
+                height: 150px;
+            }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #ff0000, #ffd700);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #ffd700, #ff0000);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Epic Hero Collection</h1>
+            <p class="page-subtitle">Experience the ultimate superhero cinematic journey</p>
+        </div>
+
+        <div class="video-grid">
+            <div class="video-item">
+                <div class="video-number">1</div>
+                <div class="thumbnail-container">
+                    <div class="thumbnail">
+                        <img src="spiderman1.jpg" alt="Spider-Man 1" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:100%;height:100%;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);display:flex;align-items:center;justify-content:center;color:#666;font-size:14px;\'>Image Not Found</div>';">
+                    </div>
+                    <div class="play-overlay"></div>
+                </div>
+                <div class="video-info">
+                    <a href="spiderman1.html" class="video-title">Spider-Man (2002) – Trailer</a>
+                    <div class="video-description">Peter Parker becomes Spider-Man and faces off against the Green Goblin in this origin story that started it all.</div>
+                    <div class="video-meta">
+                        <div class="video-duration">Duration: 1:09</div>
+                        <div class="video-genre">Superhero</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="video-item">
+                <div class="video-number">2</div>
+                <div class="thumbnail-container">
+                    <div class="thumbnail">
+                        <img src="spiderman2.jpg" alt="Spider-Man 2" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:100%;height:100%;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);display:flex;align-items:center;justify-content:center;color:#666;font-size:14px;\'>Image Not Found</div>';">
+                    </div>
+                    <div class="play-overlay"></div>
+                </div>
+                <div class="video-info">
+                    <a href="spiderman2.html" class="video-title">Spider-Man 2 (2004) – Trailer</a>
+                    <div class="video-description">As Peter struggles to balance life and heroism, Doctor Octopus emerges as a powerful new threat to New York City.</div>
+                    <div class="video-meta">
+                        <div class="video-duration">Duration: 1:55</div>
+                        <div class="video-genre">Superhero</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="video-item">
+                <div class="video-number">3</div>
+                <div class="thumbnail-container">
+                    <div class="thumbnail">
+                        <img src="spiderman3.jpeg" alt="Spider-Man 3" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:100%;height:100%;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);display:flex;align-items:center;justify-content:center;color:#666;font-size:14px;\'>Image Not Found</div>';">
+                    </div>
+                    <div class="play-overlay"></div>
+                </div>
+                <div class="video-info">
+                    <a href="spiderman3.html" class="video-title">Spider-Man 3 (2007) – Trailer</a>
+                    <div class="video-description">Peter faces his darkest battle yet with the rise of Sandman, New Goblin, and the venomous power within himself.</div>
+                    <div class="video-meta">
+                        <div class="video-duration">Duration: 2:36</div>
+                        <div class="video-genre">Superhero</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-item">
+                <div class="video-number">4</div>
+                <div class="thumbnail-container">
+                    <div class="thumbnail">
+                        <img src="TASM.jpg" alt="The Amazing Spider-Man" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:100%;height:100%;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);display:flex;align-items:center;justify-content:center;color:#666;font-size:14px;\'>Image Not Found</div>';">
+                    </div>
+                    <div class="play-overlay"></div>
+                </div>
+                <div class="video-info">
+                    <a href="TASM.html" class="video-title">The Amazing Spider-Man (2012) – Trailer</a>
+                    <div class="video-description">Peter Parker uncovers secrets about his parents while gaining powers that lead him to become Spider-Man and face the Lizard.</div>
+                    <div class="video-meta">
+                        <div class="video-duration">Duration: 2:30</div>
+                        <div class="video-genre">Superhero</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="video-item">
+                <div class="video-number">5</div>
+                <div class="thumbnail-container">
+                    <div class="thumbnail">
+                        <img src="TASM2.jpeg" alt="The Amazing Spider-Man 2" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:100%;height:100%;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);display:flex;align-items:center;justify-content:center;color:#666;font-size:14px;\'>Image Not Found</div>';">
+                    </div>
+                    <div class="play-overlay"></div>
+                </div>
+                <div class="video-info">
+                    <a href="TASM2.html" class="video-title">The Amazing Spider-Man 2 (2014) – Trailer</a>
+                    <div class="video-description">Peter continues to protect New York as Spider-Man while dealing with love, loss, and new villains like Electro and the Green Goblin.</div>
+                    <div class="video-meta">
+                        <div class="video-duration">Duration: 2:40</div>
+                        <div class="video-genre">Superhero</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="video-item">
+                <div class="video-number">6</div>
+                <div class="thumbnail-container">
+                    <div class="thumbnail">
+                        <img src="spidermanhomecoming.jpg" alt="Spider-Man: Homecoming" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:100%;height:100%;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);display:flex;align-items:center;justify-content:center;color:#666;font-size:14px;\'>Image Not Found</div>';">
+                    </div>
+                    <div class="play-overlay"></div>
+                </div>
+                <div class="video-info">
+                    <a href="homecoming.html" class="video-title">Spider-Man: Homecoming (2017) – Trailer</a>
+                    <div class="video-description">After helping the Avengers, Peter Parker returns to high school life while facing the Vulture and proving himself as Spider-Man.</div>
+                    <div class="video-meta">
+                        <div class="video-duration">Duration: 2:39</div>
+                        <div class="video-genre">Superhero</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="video-item">
+                <div class="video-number">7</div>
+                <div class="thumbnail-container">
+                    <div class="thumbnail">
+                        <img src="spidermanfarfromhome.jpeg" alt="Spider-Man: Far From Home" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:100%;height:100%;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);display:flex;align-items:center;justify-content:center;color:#666;font-size:14px;\'>Image Not Found</div>';">
+                    </div>
+                    <div class="play-overlay"></div>
+                </div>
+                <div class="video-info">
+                    <a href="farfromhome.html" class="video-title">Spider-Man: Far From Home (2019) – Trailer</a>
+                    <div class="video-description">Peter goes on a school trip to Europe, but his vacation is cut short as he battles Elementals and meets Mysterio.</div>
+                    <div class="video-meta">
+                        <div class="video-duration">Duration: 2:46</div>
+                        <div class="video-genre">Superhero</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="video-item">
+                <div class="video-number">8</div>
+                <div class="thumbnail-container">
+                    <div class="thumbnail">
+                        <img src="spidermannwh.jpg" alt="Spider-Man: No Way Home" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:100%;height:100%;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);display:flex;align-items:center;justify-content:center;color:#666;font-size:14px;\'>Image Not Found</div>';">
+                    </div>
+                    <div class="play-overlay"></div>
+                </div>
+                <div class="video-info">
+                    <a href="nowayhome.html" class="video-title">Spider-Man: No Way Home (2021) – Trailer</a>
+                    <div class="video-description">Peter's identity is revealed to the world. Seeking help from Doctor Strange, he opens the multiverse—and chaos follows.</div>
+                    <div class="video-meta">
+                        <div class="video-duration">Duration: 3:04</div>
+                        <div class="video-genre">Superhero</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="video-item">
+                <div class="video-number">9</div>
+                <div class="thumbnail-container">
+                    <div class="thumbnail">
+                        <img src="Blackpanther.jpeg" alt="Black Panther" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:100%;height:100%;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);display:flex;align-items:center;justify-content:center;color:#666;font-size:14px;\'>Image Not Found</div>';">
+                    </div>
+                    <div class="play-overlay"></div>
+                </div>
+                <div class="video-info">
+                    <a href="blackpanther.html" class="video-title">Black Panther (2018) – Trailer</a>
+                    <div class="video-description">T'Challa returns to Wakanda as king but faces a powerful enemy who threatens to destroy his nation's legacy and the world.</div>
+                    <div class="video-meta">
+                        <div class="video-duration">Duration: 1:52</div>
+                        <div class="video-genre">Superhero</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="video-item">
+                <div class="video-number">10</div>
+                <div class="thumbnail-container">
+                    <div class="thumbnail">
+                        <img src="avengersinfinitywar.jpg" alt="Avengers: Infinity War" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'width:100%;height:100%;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);display:flex;align-items:center;justify-content:center;color:#666;font-size:14px;\'>Image Not Found</div>';">
+                    </div>
+                    <div class="play-overlay"></div>
+                </div>
+                <div class="video-info">
+                    <a href="infinitywar.html" class="video-title">Avengers: Infinity War (2018) – Trailer</a>
+                    <div class="video-description">The Avengers must join forces with the Guardians of the Galaxy to stop Thanos, who seeks the Infinity Stones to wipe out half of all life in the universe.</div>
+                    <div class="video-meta">
+                        <div class="video-duration">Duration: 2:24</div>
+                        <div class="video-genre">Superhero</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

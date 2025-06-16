@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Demo - Carlo Renz Abad</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2a2a2a 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(51, 144, 255, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 50px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #3390ff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: #5aa3ff;
+            transform: translateY(-2px);
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #3390ff 0%, #5aa3ff 100%);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(51, 144, 255, 0.3);
+            background: linear-gradient(135deg, #2680ff 0%, #4a95ff 100%);
+        }
+
+        .back-icon {
+            font-size: 16px;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 150px 0 60px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(51, 144, 255, 0.05) 0%, rgba(0, 0, 0, 0.1) 100%);
+        }
+
+        .page-header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 50px;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #3390ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.2s forwards;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: #cccccc;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.4s forwards;
+        }
+
+        .project-type {
+            display: inline-block;
+            background: rgba(51, 144, 255, 0.2);
+            color: #3390ff;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        /* Video Section */
+        .video-section {
+            padding: 40px 0 100px;
+        }
+
+        .video-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 50px;
+        }
+
+        .video-wrapper {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(42, 42, 42, 0.6) 100%);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(51, 144, 255, 0.2);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideInUp 0.8s ease 0.8s forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(51, 144, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+            z-index: 1;
+        }
+
+        .video-wrapper:hover::before {
+            left: 100%;
+        }
+
+        .video-player {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #000;
+            z-index: 2;
+        }
+
+        .video-player iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+            border-radius: 15px;
+        }
+
+        .video-info {
+            text-align: center;
+            margin-top: 30px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .video-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        .video-description {
+            font-size: 1.1rem;
+            color: #cccccc;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto 25px;
+        }
+
+        .video-tech {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .tech-tag {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 6px 15px;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: 500;
+            backdrop-filter: blur(5px);
+        }
+
+        .video-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .action-button {
+            background: linear-gradient(135deg, #3390ff 0%, #5aa3ff 100%);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(51, 144, 255, 0.3);
+        }
+
+        .action-button.secondary {
+            background: transparent;
+            border: 2px solid rgba(51, 144, 255, 0.5);
+            color: #3390ff;
+        }
+
+        .action-button.secondary:hover {
+            background: rgba(51, 144, 255, 0.1);
+            border-color: #3390ff;
+        }
+
+        /* Loading Spinner */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            z-index: 10;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(51, 144, 255, 0.3);
+            border-left: 4px solid #3390ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 20px;
+            }
+            
+            .page-header-content {
+                padding: 0 20px;
+            }
+            
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .video-container {
+                padding: 0 20px;
+            }
+            
+            .video-wrapper {
+                padding: 25px;
+            }
+            
+            .video-player iframe {
+                height: 300px;
+            }
+            
+            .video-title {
+                font-size: 1.5rem;
+            }
+            
+            .video-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .action-button {
+                width: 100%;
+                max-width: 200px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .video-wrapper {
+                padding: 20px;
+            }
+            
+            .video-player iframe {
+                height: 250px;
+            }
+            
+            .back-button {
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon"></span>
+                Carlo Renz Abad
+            </a>
+            <button class="back-button" onclick="goBack()">
+                <span class="back-icon">←</span>
+                Back to Portfolio
+            </button>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <div class="page-header-content">
+            <span class="project-type">System</span>
+            <h1 class="page-title">Demo</h1>
+            <p class="page-subtitle">Watch the project in action</p>
+        </div>
+    </div>
+
+    <div class="video-section">
+        <div class="video-container">
+            <div class="video-wrapper">
+                <div class="video-player">
+                    <div class="loading-overlay" id="loadingOverlay">
+                        <div class="spinner"></div>
+                    </div>
+                    <iframe id="videoPlayer" 
+                            src="https://drive.google.com/file/d/1pCiNErAl4QC8pMX4Odp6YSf2FFejkISq/preview" 
+                            allowfullscreen
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+                    </iframe>
+                </div>
+                
+                <div class="video-info">
+                    <h2 class="video-title">Payroll Demo</h2>
+                    <p class="video-description">
+
+                    <div class="video-tech">
+                        <span class="tech-tag">Java</span>
+                        <span class="tech-tag">Swing</span>
+                        <span class="tech-tag">MySQL</span>
+                    </div>
+                    <div class="video-actions">
+                        <a href="#" class="action-button" onclick="requestSource(event)">
+                            📄 Request Source Code
+                        </a>
+                        <a href="Contactme.html" class="action-button secondary">
+                            📧 Contact Developer
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hide loading overlay when iframe loads
+        document.getElementById('videoPlayer').onload = function() {
+            setTimeout(() => {
+                document.getElementById('loadingOverlay').classList.add('hidden');
+            }, 1000);
+        };
+
+        // Handle video load error
+        document.getElementById('videoPlayer').onerror = function() {
+            document.getElementById('loadingOverlay').innerHTML = `
+                <div style="text-align: center; color: #ff6b6b;">
+                    <h3>⚠️ Video Unavailable</h3>
+                    <p>Failed to load video. Please try again later.</p>
+                </div>
+            `;
+        };
+
+        // Navigation functions
+        function goBack() {
+            if (document.referrer && document.referrer.includes('Portfolio.html')) {
+                window.history.back();
+            } else {
+                window.location.href = 'Portfolio.html';
+            }
+        }
+
+        // Handle source code request
+        function requestSource(e) {
+            e.preventDefault();
+            showNotification('Contact me to request the source code!', 'info');
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => notification.remove());
+            
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <span class="notification-icon">${type === 'info' ? 'ℹ️' : '✅'}</span>
+                    <span class="notification-message">${message}</span>
+                    <button class="notification-close">&times;</button>
+                </div>
+            `;
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${type === 'info' ? 'rgba(51, 144, 255, 0.9)' : 'rgba(34, 197, 94, 0.9)'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                backdrop-filter: blur(10px);
+                border: 1px solid ${type === 'info' ? 'rgba(51, 144, 255, 0.3)' : 'rgba(34, 197, 94, 0.3)'};
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                z-index: 10000;
+                transform: translateX(400px);
+                transition: all 0.3s ease;
+                max-width: 350px;
+                font-family: 'Segoe UI', sans-serif;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.style.cssText = `
+                background: none;
+                border: none;
+                color: white;
+                font-size: 20px;
+                cursor: pointer;
+                padding: 0;
+                margin-left: 10px;
+            `;
+            
+            closeBtn.addEventListener('click', () => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => notification.remove(), 300);
+            });
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.transform = 'translateX(400px)';
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 4000);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                goBack();
+            }
+        });
+    </script>
+</body>
+</html>

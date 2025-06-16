@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Contact Me - Carlo Renz</title>
+    <link rel="stylesheet" href="Contactme.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon"></span>
+                Carlo Renz Abad
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Aboutme.html">About Me</a></li>
+                <li><a href="Services.html">Services</a></li>
+                <li><a href="Portfolio.html">Portfolio</a></li>
+                <li><a href="Contactme.html" class="active">Contact</a></li>
+            </ul>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/carlo-renz-abad-65189b36b/" title="LinkedIn">🔗</a>
+                <a href="https://github.com/crda08" title="GitHub">💻</a>
+                <a href="https://web.facebook.com/carlooo.abad08/?_rdc=1&_rdr#" title="Facebook">📘</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-nav-links">
+            <a href="index.html">Home</a>
+            <a href="Aboutme.html">About Me</a>
+            <a href="Services.html">Services</a>
+            <a href="Portfolio.html">Portfolio</a>
+            <a href="Contactme.html">Contact</a>
+        </div>
+        <div class="mobile-social-links">
+            <a href="#" title="LinkedIn">🔗</a>
+            <a href="#" title="GitHub">💻</a>
+            <a href="https://web.facebook.com/carlooo.abad08/?_rdc=1&_rdr#" title="Facebook">📘</a>
+        </div>
+    </div>
+
+    <div class="contact-hero">
+        <div class="hero-content">
+            <div class="hero-tagline">Let's work together and create something amazing.</div>
+            <h1 class="hero-title">Get In Touch</h1>
+            <p class="hero-description">
+                Ready to turn your ideas into reality? I'm here to help you build 
+                exceptional digital solutions that drive results.
+            </p>
+        </div>
+    </div>
+
+    <div class="contact-main">
+        <div class="contact-container">
+            <div class="contact-left">
+                <div class="contact-info">
+                    <h2 class="contact-title">Contact Information</h2>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div class="contact-content">
+                                <h3>Email</h3>
+                                <p>poolerenz@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📱</div>
+                            <div class="contact-content">
+                                <h3>Phone</h3>
+                                <p>+63 956 458 1769</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div class="contact-content">
+                                <h3>Location</h3>
+                                <p>Coral Way, Pasay City<br>Metro Manila, Philippines</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">⏰</div>
+                            <div class="contact-content">
+                                <h3>Response Time</h3>
+                                <p>Usually within 24 hours</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="map-container">
+                    <h3 class="map-title">Find Me Here</h3>
+                    <div class="map-wrapper">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.6084847285833!2d121.0019685!3d14.5378!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c9f5b1f5b1f5%3A0x1f5b1f5b1f5b1f5b!2sCoral%20Way%2C%20Pasay%2C%20Metro%20Manila!5e0!3m2!1sen!2sph!4v1640000000000!5m2!1sen!2sph"
+                            width="100%" 
+                            height="300" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-right">
+                <div class="contact-form-container">
+                    <h2 class="form-title">Send Me a Message</h2>
+                    <form id="contact-form" class="contact-form">
+                        <div class="form-group">
+                            <label for="user_name">Full Name</label>
+                            <input type="text" id="user_name" name="user_name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="user_email">Email Address</label>
+                            <input type="email" id="user_email" name="user_email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="user_phone">Phone Number</label>
+                            <input type="tel" id="user_phone" name="user_phone">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="project_type">Project Type</label>
+                            <select id="project_type" name="project_type" required>
+                                <option value="">Select a service</option>
+                                <option value="web-development">Web Development</option>
+                                <option value="mobile-app">Mobile App Development</option>
+                                <option value="database">Database Solutions</option>
+                                <option value="ui-ux">UI/UX Design</option>
+                                <option value="consultation">Technical Consultation</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="budget">Budget Range</label>
+                            <select id="budget" name="budget">
+                                <option value="">Select budget range</option>
+                                <option value="Source Code Inquiry">Source Code Inquiry</option>
+                                <option value="under-50k">Under ₱50,000</option>
+                                <option value="50k-100k">₱50,000 - ₱100,000</option>
+                                <option value="100k-250k">₱100,000 - ₱250,000</option>
+                                <option value="250k-500k">₱250,000 - ₱500,000</option>
+                                <option value="500k-plus">₱500,000+</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Project Details</label>
+                            <textarea id="message" name="message" rows="6" placeholder="Tell me about your project, timeline, and any specific requirements..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn" id="submit-btn">
+                            <span class="btn-text">Send Message</span>
+                            <span class="btn-loading" style="display: none;">Sending...</span>
+                        </button>
+                    </form>
+                    
+                    <div id="form-status" class="form-status"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cta-section">
+        <div class="cta-container">
+            <h2 class="cta-title">Ready to Start Your Project?</h2>
+            <p class="cta-description">
+                Let's discuss how I can help bring your vision to life with 
+                cutting-edge technology and professional expertise.
+            </p>
+            <div class="cta-buttons">
+                <a href="#contact-form" class="btn-primary">Start Project</a>
+                <a href="Home.html" class="btn-secondary">View Portfolio</a>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="Contactme.js"></script>
+</body>
+</html>

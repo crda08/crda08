@@ -1,0 +1,189 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+ 
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+  }
+ 
+  /* Top section */
+  .top-bar {
+    background: #f5f5f5;
+    padding: 10px;
+  }
+ 
+  .browser-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+ 
+  .browser-bar input {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+  }
+ 
+  .logo {
+    background: #22223b;
+    color: white;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 45px;
+  }
+
+  .mottoeme{
+    font-weight: lighter;
+    font-size:28px;
+  }
+ 
+  /* Hero Section */
+  .hero {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+    background-color: #eff1f3;
+    color: black;
+  }
+ 
+  .hero-text {
+    flex: 1;
+    padding-right: 20px;
+    font-size: 39px;
+  }
+ 
+  .hero-text h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+ 
+  .hero-text p {
+    margin-bottom: 20px;
+  }
+ 
+  .action-button {
+    background: #555;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+ 
+  .signup-form {
+    background: #22223b;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: px;
+    flex: 1;
+    max-width: 400px;
+  }
+ 
+  .signup-form h2 {
+    margin-bottom: 10px;
+  }
+ 
+  .google-signup {
+    width: 100%;
+    background: #4285F4;
+    color: white;
+    padding: 10px;
+    border: none;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+ 
+  .signup-form form {
+    display: flex;
+    flex-direction: column;
+  }
+ 
+  .signup-form input {
+    margin: 5px 0;
+    padding: 8px;
+  }
+ 
+  .signup-form small {
+    font-size: 0.8rem;
+    color: rgb(255, 255, 255);
+    margin-bottom: 10px;
+  }
+ 
+  .signup-form button[type="submit"] {
+    background: #555;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .seperatorbelow {
+    background: #22223b;
+    color: white;
+    font-weight: bold;
+    font-size: 39px;
+  }
+ 
+  /* Features */
+  .features {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 40px;
+    justify-content: space-around;
+    background: #f9f9f9;
+  }
+ 
+  .feature {
+    width: 200px;
+    margin: 10px;
+    text-align: center;
+  }
+ 
+  .avatar {
+    width: 150px;
+    height: 150px;
+    background-image: url(carlo1x1.png); /* replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+  }
+
+  .avatar2 {
+    width: 150px;
+    height: 150px;
+    background-image: url(coco1x1.jpg); /* replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+  }
+  
+  .avatar3 {
+    width: 150px;
+    height: 150px;
+    background-image: url(speed1x1.jpg); /* replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+  }
+
+  .avatar4 {
+    width: 150px;
+    height: 150px;
+    background-image: url(awra-briguela-1.jpg); /* replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+  }
+ 
+  /* Footer */
+  .bottom-cta {
+    text-align: center;
+    padding: 40px;
+    background: #eee;
+  }
